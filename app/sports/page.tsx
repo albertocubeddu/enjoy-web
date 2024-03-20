@@ -4,6 +4,7 @@ import Search from "../ui/search";
 import Modal from "../ui/modal";
 import React, { useContext } from "react";
 import { AuthContext } from "../../store/auth-context";
+import Sports from "../ui/sports/sports";
 
 export default function Home() {
   const authCtx = useContext(AuthContext);
@@ -15,6 +16,9 @@ export default function Home() {
         <Search placeholder="Search" />
       </div>
       {authCtx.createSport ? <Modal /> : ""}
+      <div>
+        <Sports />
+      </div>
     </main>
   );
 }

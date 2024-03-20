@@ -1,4 +1,4 @@
-const sports = [
+const sport = [
   {
     id: "1",
     name: "Football",
@@ -16,6 +16,6 @@ const sports = [
 // ];
 
 module.exports = {
-  sports,
+  sport,
   // centers,
 };
