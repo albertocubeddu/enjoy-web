@@ -2,15 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import { fetchSports } from "../../lib/data";
+import { Sport } from "../../lib/definitions"; // Import Sport type definition
 
 const Sports = () => {
-  const [sport, setSport] = useState([]);
+  const [sport, setSport] = useState<Sport[]>([]); // Specify the correct type
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const sportsData = await fetchSports();
-        setSport(sportData);
+        setSport(sportsData);
       } catch (error) {
         console.error("Error fetching sports:", error);
       }

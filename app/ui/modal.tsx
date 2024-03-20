@@ -20,7 +20,7 @@ export const Overlay = () => {
   const authCtx = useContext(AuthContext);
   return (
     <div className=" bg-surface-light p-10 z-20 w-full overflow-scroll rounded-lg">
-      <CreateSport onClick={authCtx.showCreateSport} />
+      <CreateSport />
     </div>
   );
 };

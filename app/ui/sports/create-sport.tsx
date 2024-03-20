@@ -6,12 +6,12 @@ import React, { useRef, useState, useContext } from "react";
 
 const CreateSport = () => {
   const authCtx = useContext(AuthContext);
-  const fileInputRef = useRef(null);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null); // Adjust state type
 
-  const handleAddImage = (event) => {
+  const handleAddImage = (event: any) => {
     event.preventDefault(); // Prevent default behavior
-    fileInputRef.current.click();
+    fileInputRef.current?.click();
   };
 
   const handleFileChange = (event: any) => {

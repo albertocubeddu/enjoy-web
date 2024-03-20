@@ -1,5 +1,7 @@
 import { sql } from "@vercel/postgres";
 
+import { Sport } from "./definitions";
+
 export async function fetchSports() {
   try {
     const data = await sql<Sport>`
