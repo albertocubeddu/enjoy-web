@@ -1,41 +1,35 @@
-"use client";
+import { fetchSports } from "@/app/lib/data";
+import Image from "next/image";
+import { MapPinIcon } from "@heroicons/react/24/solid";
 
-import React, { useEffect, useState } from "react";
-import { fetchSports } from "../../lib/data";
-import { Sport } from "../../lib/definitions"; // Import Sport type definition
-
-const Sports = () => {
-  const [sport, setSport] = useState<Sport[]>([]); // Specify the correct type
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const sportsData = await fetchSports();
-        setSport(sportsData);
-      } catch (error) {
-        console.error("Error fetching sports:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+export default async function Sports() {
+  const totalSports = await fetchSports();
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="grid grid-cols-3 gap-4">
-        {sport.map((sport) => (
-          <div key={sport.id} className="bg-gray-100 rounded-lg p-4">
-            <img
+    <>
+      {totalSports.map((sport) => (
+        <div className="border border-outline-medium w-[451px] rounded-lg gap-x-5">
+          <div key={sport.id} className="flex items-center w-1/2 p-[16px]">
+            <Image
               src={sport.image_url}
               alt={sport.name}
-              className="w-full h-auto rounded-lg mb-2"
+              width={112}
+              height={112}
+              className="rounded-lg"
             />
-            <div className="text-center">{sport.name}</div>
+            <div className="flex flex-col px-4 gap-y-1">
+              <div className="flex">
+                <MapPinIcon className="w-4 text-primary-primary mr-1" />
+                <p className="text-sm text-primary-primary ">0 Centers</p>
+              </div>
+              <h3 className="text-dark-400 font-semibold">{sport.name}</h3>
+              <div>
+                <p className="text-sm text-on-medium">Last Edited:</p>
+              </div>
+            </div>
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+      ))}
+    </>
   );
-};
-
-export default Sports;
+}

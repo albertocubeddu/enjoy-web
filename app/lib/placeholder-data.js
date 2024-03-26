@@ -1,21 +1,13 @@
-const sport = [
+const { v4: uuidv4 } = require("uuid");
+
+const sports = [
   {
-    id: "1",
+    id: uuidv4(), // Generate a UUID
     name: "Football",
-    image_url: "../../public/sports/football.jpg",
+    image_url: "/sports/football.jpg",
   },
 ];
 
-// const centers = [
-//   {
-//     sport_id: sports[0].id,
-//     name: "Stronghold London Fileds",
-//     tags: ["Bouldering", "Climbing"],
-//     date: "2022-12-06",
-//   },
-// ];
-
 module.exports = {
-  sport,
-  // centers,
+  sports,
 };

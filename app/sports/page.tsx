@@ -1,22 +1,14 @@
-"use client";
-
 import Search from "../ui/search";
-import Modal from "../ui/modal";
-import React, { useContext } from "react";
-import { AuthContext } from "../../store/auth-context";
 import Sports from "../ui/sports/sports";
 
-export default function Home() {
-  const authCtx = useContext(AuthContext);
-
+export default function Page() {
   return (
-    <main className="flex flex-col min-h-screen  w-2/4 m-auto gap-4 text-primary text-2xl">
+    <main className="flex flex-col min-h-screen  w-[926px] m-auto gap-4 text-primary text-2xl">
       <h1 className="text-on-surface font-semibold">Sports</h1>
       <div>
         <Search placeholder="Search" />
       </div>
-      {authCtx.createSport ? <Modal /> : ""}
-      <div>
+      <div className="flex justify-between">
         <Sports />
       </div>
     </main>

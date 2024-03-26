@@ -1,16 +1,19 @@
 // import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata: Metadata = {
 //   title: "Enjoy",
 //   description: "Enjoy Admin Portal",
 // };
 
+//Fonts & CSS
+import { Inter } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"] });
+
+import AuthContextProvider from "@/store/auth-context";
 import SideNav from "@/app/ui/sidenav";
-import AuthContextProvider from "../store/auth-context.js";
+import Modal from "./ui/modal";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -25,6 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               {children}
             </div>
           </div>
+          <Modal />
         </body>
       </html>
     </AuthContextProvider>

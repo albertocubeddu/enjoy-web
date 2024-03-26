@@ -1,13 +1,14 @@
 "use client";
 
 import { XMarkIcon, PlusIcon } from "@heroicons/react/24/solid";
-import { AuthContext } from "../../../store/auth-context";
+import { AuthContext } from "../../../../store/auth-context";
 import React, { useRef, useState, useContext } from "react";
+import { createSport } from "@/app/lib/actions";
 
 const CreateSport = () => {
   const authCtx = useContext(AuthContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null); // Adjust state type
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleAddImage = (event: any) => {
     event.preventDefault(); // Prevent default behavior
@@ -32,11 +33,6 @@ const CreateSport = () => {
     setSelectedImage(null);
   };
 
-  const handleCreateSport = () => {
-    // Implement your logic here eventually (commented out for now)
-    // console.log("Creating sport...");
-  };
-
   return (
     <div className="gap-y-5">
       <div className="flex justify-between py-2">
@@ -46,7 +42,7 @@ const CreateSport = () => {
         </button>
       </div>
 
-      <form>
+      <form action={createSport}>
         <div className="flex flex-col">
           <label htmlFor="sport-name" className="py-4">
             Sport Name
@@ -57,12 +53,13 @@ const CreateSport = () => {
             className="block w-full rounded-md border focus:ring-0 focus:outline-none focus:border-primary-primary active:border-primary-primary py-[9px] pl-6 text-sm outline-2 placeholder:text-gray-500"
             max-length="50"
             required
+            name="name"
           />
         </div>
 
         <div className="py-4">
           <p>Sport Image</p>
-          <div className="w-36 h-36 bg-primary-light border border-dotted border-primary-primary flex justify-center rounded gap-y-4 mt-3 relative">
+          <div className="w-36 h-36 bg-primary-light border border-dotted border-primary-primary flex justify-center rounded gap-y-4 mt-3 relative overflow-hidden">
             {selectedImage ? (
               <>
                 <img
@@ -92,25 +89,26 @@ const CreateSport = () => {
               accept="image/*"
               className="hidden"
               onChange={handleFileChange}
+              name="image_url"
             />
           </div>
         </div>
-      </form>
 
-      <div className="flex justify-end mt-4">
-        <button
-          className=" text-black font-medium text-sm rounded py-2 px-6 mr-2 border border-black"
-          onClick={authCtx.showCreateSport}
-        >
-          Cancel
-        </button>
-        <button
-          className="bg-primary-primary text-white font-medium text-sm rounded py-2 px-6 border border-transparent"
-          onClick={handleCreateSport}
-        >
-          Create New
-        </button>
-      </div>
+        <div className="flex justify-end mt-4">
+          <button
+            className=" text-black font-medium text-sm rounded py-2 px-6 mr-2 border border-black"
+            onClick={authCtx.showCreateSport}
+          >
+            Cancel
+          </button>
+          <button
+            className="bg-primary-primary text-white font-medium text-sm rounded py-2 px-6 border border-transparent"
+            type="submit"
+          >
+            Create New
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
