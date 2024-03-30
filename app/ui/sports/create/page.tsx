@@ -1,22 +1,34 @@
-"use client";
-
 import { XMarkIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { AuthContext } from "../../../../store/auth-context";
 import React, { useRef, useState, useContext } from "react";
 import { createSport } from "@/app/lib/actions";
 
 const CreateSport = () => {
+  //Manage Closing State
   const authCtx = useContext(AuthContext);
+  //Input Refs
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  //Manage State for preview and submission
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  //Add and display Image
 
   const handleAddImage = (event: any) => {
     event.preventDefault(); // Prevent default behavior
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event: any) => {
-    const file = event.target.files[0];
+  //Remove Image
+
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+  };
+
+  //Handle File Change
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (!file) return;
 
     // Validate file type (optional)
@@ -25,12 +37,56 @@ const CreateSport = () => {
       return;
     }
 
-    const imageUrl = URL.createObjectURL(file);
-    setSelectedImage(imageUrl);
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setSelectedImage(reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
-  const handleRemoveImage = () => {
-    setSelectedImage(null);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const name = nameInputRef.current.value;
+    console.log(name);
+    event.preventDefault();
+    // Create form
+    const form = event.currentTarget;
+    // Create fileInput to find the image file (here we are casting the elements as HTMLInputForm for TS to access)
+    const fileInput = Array.from(form.elements).find(
+      (element) => (element as HTMLInputElement).name === "file"
+    ) as HTMLInputElement;
+
+    // Create new instance of formData to append and upload
+    const formData = new FormData();
+
+    //Iterate through all files in input, and append them to files (future proof)
+    for (const file of fileInput.files) {
+      formData.append("file", file);
+    }
+
+    // Upload to Cloudinary
+
+    formData.append("upload_preset", "my-uploads");
+
+    const data = await fetch(
+      "https://api.cloudinary.com/v1_1/because-frank/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    ).then((r) => r.json());
+
+    // Add to database
+    if (data.secure_url) {
+      const createdSport = {
+        name,
+        image: data.secure_url,
+      };
+      createSport(createdSport);
+    } else {
+      console.error("Error uploading image to Cloudinary");
+    }
   };
 
   return (
@@ -42,18 +98,19 @@ const CreateSport = () => {
         </button>
       </div>
 
-      <form action={createSport}>
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <label htmlFor="sport-name" className="py-4">
             Sport Name
           </label>
           <input
-            type="text"
-            placeholder="Enter Sport Name"
             className="block w-full rounded-md border focus:ring-0 focus:outline-none focus:border-primary-primary active:border-primary-primary py-[9px] pl-6 text-sm outline-2 placeholder:text-gray-500"
-            max-length="50"
-            required
+            ref={nameInputRef}
             name="name"
+            type="text"
+            maxLength={50}
+            placeholder="Enter Sport Name"
+            required
           />
         </div>
 
@@ -84,12 +141,12 @@ const CreateSport = () => {
               </button>
             )}
             <input
+              className="hidden"
+              name="file"
               ref={fileInputRef}
               type="file"
               accept="image/*"
-              className="hidden"
               onChange={handleFileChange}
-              name="image_url"
             />
           </div>
         </div>
