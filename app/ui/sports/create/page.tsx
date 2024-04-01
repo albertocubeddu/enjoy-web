@@ -1,32 +1,31 @@
+"use client";
+
 import { XMarkIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { AuthContext } from "../../../../store/auth-context";
 import React, { useRef, useState, useContext } from "react";
 import { createSport } from "@/app/lib/actions";
 
 const CreateSport = () => {
-  //Manage Closing State
+  // Manage Closing State
   const authCtx = useContext(AuthContext);
-  //Input Refs
+  // Input Refs
   const fileInputRef = useRef<HTMLInputElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
-  //Manage State for preview and submission
+  // Manage State for preview and submission
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  //Add and display Image
-
+  // Add and display Image
   const handleAddImage = (event: any) => {
     event.preventDefault(); // Prevent default behavior
     fileInputRef.current?.click();
   };
 
-  //Remove Image
-
+  // Remove Image
   const handleRemoveImage = () => {
     setSelectedImage(null);
   };
 
-  //Handle File Change
-
+  // Handle File Change
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -47,9 +46,13 @@ const CreateSport = () => {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    const name = nameInputRef.current.value;
-    console.log(name);
     event.preventDefault();
+    const name = nameInputRef.current?.value.trim();
+
+    if (!name) {
+      console.error("Name field is empty");
+      return;
+    }
     // Create form
     const form = event.currentTarget;
     // Create fileInput to find the image file (here we are casting the elements as HTMLInputForm for TS to access)
@@ -61,31 +64,37 @@ const CreateSport = () => {
     const formData = new FormData();
 
     //Iterate through all files in input, and append them to files (future proof)
-    for (const file of fileInput.files) {
-      formData.append("file", file);
-    }
-
-    // Upload to Cloudinary
-
-    formData.append("upload_preset", "my-uploads");
-
-    const data = await fetch(
-      "https://api.cloudinary.com/v1_1/because-frank/image/upload",
-      {
-        method: "POST",
-        body: formData,
+    if (fileInput.files) {
+      for (let i = 0; i < fileInput.files.length; i++) {
+        const file = fileInput.files[i];
+        formData.append("file", file);
       }
-    ).then((r) => r.json());
 
-    // Add to database
-    if (data.secure_url) {
-      const createdSport = {
-        name,
-        image: data.secure_url,
-      };
-      createSport(createdSport);
-    } else {
-      console.error("Error uploading image to Cloudinary");
+      // Upload to Cloudinary
+      formData.append("upload_preset", "my-uploads");
+
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/because-frank/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((r) => r.json());
+
+      console.log(data.secure_url);
+
+      // Add to database
+      if (data.secure_url) {
+        const createdSport = {
+          name,
+          image: data.secure_url,
+        };
+        console.log("Data to be sent to backend:", createdSport);
+        createSport(createdSport);
+        authCtx.showCreateSport();
+      } else {
+        console.error("Error uploading image to Cloudinary");
+      }
     }
   };
 
@@ -159,7 +168,7 @@ const CreateSport = () => {
             Cancel
           </button>
           <button
-            className="bg-primary-primary text-white font-medium text-sm rounded py-2 px-6 border border-transparent"
+            className="bg-primary-primary text-on-light font-medium text-sm rounded py-2 px-6 border border-transparent"
             type="submit"
           >
             Create New

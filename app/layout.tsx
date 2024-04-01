@@ -19,8 +19,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <AuthContextProvider>
       <html lang="en">
-        <body className={`${inter.className} antialiased text-on-surface`}>
-          <div className="flex h-screen flex-col md:flex-row md:overflow-hidden bg-white">
+        <body
+          className={`${inter.className} antialiased text-on-surface dark:text-on-surface-dark`}
+        >
+          <div className="flex h-screen flex-col md:flex-row md:overflow-hidden bg-white dark:bg-surface-primary-dark">
             <div className="w-full flex-none md:w-64 text-on-medium">
               <SideNav />
             </div>
