@@ -22,6 +22,28 @@ async function seedSports(client) {
       );
     `;
 
+    // //Create the 'Tags' table if it doesn't exist
+    // const createTagsTable = await client.sql`
+    //   CREATE TABLE IF NOT EXISTS tags (
+    //     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    //     name VARCHAR(255) NOT NULL
+    //     sport_id UUID REFERENCES sports(id),
+    //     groups_id UUID REFERENCES groups(id),
+
+    //   );
+    // `;
+
+    // //Create the 'Groups' table if it doesn't exist
+    // const createGroupsTable = await client.sql`
+    //   CREATE TABLE IF NOT EXISTS tags (
+    //     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    //     name VARCHAR(255) NOT NULL
+    //     sport_id UUID REFERENCES sports(id),
+    //     tags_id UUID REFERENCES tags(id),
+
+    //   );
+    // `;
+
     console.log(`Created "sports" and "images" tables`);
 
     // Insert data into the "sports" table

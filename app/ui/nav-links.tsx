@@ -16,9 +16,8 @@ const links = [
     href: "/sports",
     icon: Cog6ToothIcon,
   },
-  { name: "Filter Groups", href: "/filter-groups", icon: Cog6ToothIcon },
+  { name: "Groups", href: "/groups", icon: Cog6ToothIcon },
   { name: "Tags", href: "/tags", icon: Cog6ToothIcon },
-  { name: "Product Types", href: "/product-types", icon: Cog6ToothIcon },
 ];
 
 export default function NavLinks() {
@@ -33,7 +32,7 @@ export default function NavLinks() {
             key={link.name}
             href={link.href}
             className={clsx(
-              "flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-md font-medium: hover:text-on-surface md:flex-none md:justify-start md:p-2 md:px-3",
+              "flex h-[48px] grow items-center justify-center gap-2 rounded-md p-3 text-md font-semibold hover:text-on-surface md:flex-none md:justify-start md:p-2 md:px-3",
               {
                 "text-primary-primary": pathname === link.href,
               }

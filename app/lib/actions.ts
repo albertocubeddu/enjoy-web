@@ -48,7 +48,7 @@ export async function createSport(data: SportData) {
 
 //Delete Sport
 
-export async function deleteSport(sportId: number) {
+export async function deleteSport(sportId: string) {
   const client = await db.connect();
 
   try {

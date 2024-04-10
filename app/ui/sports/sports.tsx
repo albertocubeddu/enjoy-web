@@ -17,7 +17,7 @@ export default async function Sports() {
       {totalSports.map((sport) => (
         <div
           key={sport.id}
-          className="flex-wrap border-[.5px] dark:bg-surface-darkextra-light border-outline-medium w-[451px] rounded-lg gap-x-5"
+          className="flex-wrap border-[1px] dark:bg-surface-primary-very-light-dark hover:bg-modal dark:hover:bg-surface-light-dark dark:border-outline-medium-dark w-[451px] rounded-lg gap-x-5"
         >
           <div className="flex items-center p-[16px]">
             <div className="h-[112px] w-[112px] overflow-hidden">

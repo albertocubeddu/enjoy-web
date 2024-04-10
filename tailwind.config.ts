@@ -15,18 +15,20 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        //Surface
+        //Surface (BG)
         "surface-primary": "#FFFFFF",
-        "surface-primary-dark": "#090909",
+        "surface-primary-dark": "#121212",
+        "surface-primary-very-light": "#FFFFFF",
+        "surface-primary-very-light-dark": "#171717",
         "surface-extra-light": "#FFFFFF",
-        "surface-dark-extra-light": "#212121",
+        "surface-extra-light-dark": "#212121",
         "surface-light": "#FCFCFC",
-        "surface-dark-light": "#0B0B0B",
+        "surface-light-dark": "#272727",
         "surface-medium": "#F9F9F9",
-        "surface-dark-medium": "#141414",
+        "surface-medium-dark": "#3A383F",
         "surdace-dark": "#FFFFFF",
         "surface-dark-dark": "#FFFFFF",
-        //On
+        //On (Elements)
         "on-surface": "#000000",
         "on-surface-dark": "#FFFFFF",
         "on-light": "#A1A1A1",
@@ -35,7 +37,7 @@ const config: Config = {
         "on-dark-medium": "#A1A1A1",
         "on-dark": "#FFFFFF",
         "on-dark-dark": "#FFFFFF",
-        //Outline
+        //Outline (borders)
         "outline-medium": "#E5E5E5",
         "outline-medium-dark": "#3B3B3B",
         "outline-light": "#EEEEEE",
@@ -43,6 +45,8 @@ const config: Config = {
         //Primary
         "primary-primary": "#35B164",
         "primary-primary-dark": "#76FB92",
+        "primary-primary-extra-light": "#FFFFFF",
+        "primary-primary-dark-extra-light": "#FFFFFF",
         "primary-light": "#EAFEEF",
         "primary-light-dark": "#183F37",
         "primary-medium": "#76FB92",
@@ -51,6 +55,7 @@ const config: Config = {
         "primary-dark-dark": "#EAFEEF",
         //Util
         modal: "rgba(0, 0, 0, 0.5)",
+        "dark-transparent": "rgba(0, 0, 0, 0.5)",
       },
       // fontSize: {
       //   sm: "0.8rem",

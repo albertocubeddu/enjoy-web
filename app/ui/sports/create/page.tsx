@@ -99,9 +99,9 @@ const CreateSport = () => {
   };
 
   return (
-    <div className="gap-y-5">
+    <div className="gap-y-5 dark:bg-surface-primary-dark">
       <div className="flex justify-between py-2">
-        <p className="font-semibold">Create Sport Category</p>
+        <p className="font-semibold text-2xl">Create Sport Category</p>
         <button onClick={authCtx.showCreateSport}>
           <XMarkIcon className="w-8 p-2 border border-outline-medium rounded-full" />
         </button>
@@ -113,7 +113,7 @@ const CreateSport = () => {
             Sport Name
           </label>
           <input
-            className="block w-full rounded-md border focus:ring-0 focus:outline-none focus:border-primary-primary active:border-primary-primary py-[9px] pl-6 text-sm outline-2 placeholder:text-gray-500"
+            className="block w-full rounded-md border focus:ring-0 focus:outline-none focus:border-primary-primary active:border-primary-primary py-[9px] pl-6 text-sm outline-2 placeholder:text-gray-500 dark:bg-surface-extra-light-dark"
             ref={nameInputRef}
             name="name"
             type="text"
@@ -124,8 +124,8 @@ const CreateSport = () => {
         </div>
 
         <div className="py-4">
-          <p>Sport Image</p>
-          <div className="w-36 h-36 bg-primary-light border border-dotted border-primary-primary flex justify-center rounded gap-y-4 mt-3 relative overflow-hidden">
+          <h2>Sport Image</h2>
+          <div className="w-36 h-36 bg-primary-light dark:bg-primary-light-dark border border-dotted border-primary-primary dark:border-primary-primary-dark flex justify-center rounded gap-y-4 mt-3 relative overflow-hidden">
             {selectedImage ? (
               <>
                 <img
@@ -142,7 +142,7 @@ const CreateSport = () => {
               </>
             ) : (
               <button
-                className="flex items-center text-xs text-primary-primary "
+                className="flex items-center text-xs text-primary-primary dark:text-primary-primary-dark"
                 onClick={handleAddImage}
               >
                 Add Photo
@@ -162,16 +162,16 @@ const CreateSport = () => {
 
         <div className="flex justify-end mt-4">
           <button
-            className=" text-black font-medium text-sm rounded py-2 px-6 mr-2 border border-black"
+            className=" text-black font-medium text-sm rounded py-2 px-6 mr-2 border border-black dark:border-surface-primary dark:text-surface-primary "
             onClick={authCtx.showCreateSport}
           >
             Cancel
           </button>
           <button
-            className="bg-primary-primary text-on-light font-medium text-sm rounded py-2 px-6 border border-transparent"
+            className="bg-primary-primary dark:bg-primary-primary-dark text-primary-light dark:text-outline-medium-dark font-medium text-sm rounded py-2 px-6 border border-transparent"
             type="submit"
           >
-            Create New
+            Create
           </button>
         </div>
       </form>

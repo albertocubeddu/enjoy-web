@@ -18,7 +18,7 @@ export const Background = (props: any) => {
 
 export const Overlay = () => {
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-surface-light p-10 w-[714px] overflow-scroll rounded-lg z-20">
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-surface-light border-[1px] dark:bg-surface-primary-dark dark:border-outline-medium-dark p-10 w-[714px] overflow-scroll rounded-lg z-20">
       <CreateSport />
     </div>
   );
