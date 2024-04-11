@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@vercel/postgres";
+import { revalidatePath } from "next/cache";
 
 interface SportData {
   name?: string;
@@ -48,11 +49,24 @@ export async function createSport(data: SportData) {
 
 //Delete Sport
 
-export async function deleteSport(sportId: string) {
+export async function deleteSport(sportId: string | number) {
+  console.log('here')
   const client = await db.connect();
 
   try {
     await client.query("BEGIN");
+
+    // We need to invert this two queries to enable the delete of the sport and the images.
+    // This is befcause you DB is structured with FK and you need to follow the order; 
+    // Even better you should use ONDELETE (Cascade) to delete the images when the sport is deleted.
+      // Delete the associated images from the "images" table
+      await client.query({
+        text: `
+          DELETE FROM images
+          WHERE sport_id = $1
+        `,
+        values: [sportId],
+      });
 
     // Delete the sport record from the "sports" table
     await client.query({
@@ -63,16 +77,12 @@ export async function deleteSport(sportId: string) {
       values: [sportId],
     });
 
-    // Delete the associated images from the "images" table
-    await client.query({
-      text: `
-        DELETE FROM images
-        WHERE sport_id = $1
-      `,
-      values: [sportId],
-    });
+  
 
     await client.query("COMMIT");
+
+    // Following the new pattern we going to revalidate the path to reload the information from serverside.
+    revalidatePath('/sports')
 
     console.log("Sport and associated images deleted successfully.");
   } catch (error) {
